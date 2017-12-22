@@ -125,17 +125,17 @@ end
 
 function get_fps(rbm::RBM; fps=[], init=[], params=Dict())
   if length(init) == 0
-    init = rand([-1, 1], (length(rbm.vbias),100))
+    init = rand([-1.0, 1.0], (length(rbm.vbias),100))
   end
 
   params = get_mf_iter_params(params)
-  delta = 1 #10 * params[:eps]
+  delta = 100 * params[:eps]
 
   new_fps, _ = fp_iter(rbm, init, tap_v_fp, tap_h_fp;
                     params...)
 
   if length(fps) == 0
-    return new_fps
+    return merge_fps(new_fps; delta=delta)
   end
 
   old_fps, _ = fp_iter(rbm, fps, tap_v_fp, tap_h_fp;
