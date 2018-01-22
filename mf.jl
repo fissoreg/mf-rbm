@@ -77,14 +77,12 @@ iter = 0
     new_m_v = (1-dump) * v_fp(rbm, m_v, m_h) + dump * m_v
     new_m_h = (1-dump) * h_fp(rbm, m_v, m_h) + dump * m_h 
     if eps > 0 && all(x -> x < eps, abs.(m_v .- new_m_v)) && all(x -> x < eps, abs.(m_h - new_m_h))
-      println("Done! ", i)
       break;
     end
    iter  = i 
     m_v = new_m_v
     m_h = new_m_h
   end
-  println("Out after:", iter)
 
   m_v, m_h
 end
